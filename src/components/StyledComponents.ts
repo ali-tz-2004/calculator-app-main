@@ -84,4 +84,52 @@ export const StyledCalc = styled.div`
       direction: rtl;
     }
   }
+  .processes {
+    margin-top: 20px;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    background-color: ${colors.bgProcessesPage1};
+    padding: 25px;
+    column-gap: 15px;
+    row-gap: 15px;
+    .btnReset {
+      grid-column: 1 / 3;
+    }
+    .btnEqual {
+      grid-column: 3 / 5;
+    }
+    .btn-processes {
+      text-align: center;
+      color: black;
+      cursor: pointer;
+      background-color: white;
+      border-radius: 8px;
+      padding: 10px 0;
+      position: relative;
+      background-color: white;
+      border-bottom: 3px solid #b2a295;
+      span {
+        color: ${colors.colorNumbersPage1};
+        font-weight: bold;
+        font-size: 18px;
+      }
+    }
+    .btnDelete,
+    .btnReset {
+      background-color: ${colors.bgBtnsPage1};
+      border-bottom: 3px solid #424e75;
+      span {
+        color: white;
+      }
+    }
+    .btnEqual {
+      background-color: ${colors.colorRangePage1};
+      border-bottom: 3px solid #902417;
+      span {
+        color: white;
+      }
+    }
+  }
 `;
