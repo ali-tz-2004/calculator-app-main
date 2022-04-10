@@ -51,6 +51,10 @@ export const Calc = () => {
           </div>
         </div>
       </div>
+      <div className="result">
+        <input type="text" readOnly />
+      </div>
+      <div className="processes"></div>
     </StyledCalc>
   );
 };

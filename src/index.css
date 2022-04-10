@@ -4,7 +4,7 @@
   margin: 0;
   box-sizing: border-box;
 }
-body{
+*{
   font-family: 'Kumbh Sans';
 }
 input{

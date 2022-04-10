@@ -71,4 +71,17 @@ export const StyledCalc = styled.div`
       }
     }
   }
+  .result {
+    input {
+      width: 100%;
+      height: 90px;
+      background-color: ${colors.bgInputPage1};
+      color: ${colors.while};
+      border-radius: 8px;
+      font-size: 45px;
+      font-weight: bold;
+      padding: 0 25px;
+      direction: rtl;
+    }
+  }
 `;

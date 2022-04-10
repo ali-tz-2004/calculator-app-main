@@ -3,4 +3,5 @@ export const colors = {
   while: "#fff",
   bgRangePage1: "#252C46",
   colorRangePage1: "#CB422E",
+  bgInputPage1: "#181F32",
 };
