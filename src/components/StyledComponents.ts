@@ -5,7 +5,7 @@ export const StyledApp = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: ${colors.bgPage1};
 `;
 
@@ -81,7 +81,7 @@ export const StyledCalc = styled.div`
       font-size: 45px;
       font-weight: bold;
       padding: 0 25px;
-      direction: rtl;
+      text-align: right;
     }
   }
   .processes {
@@ -114,6 +114,10 @@ export const StyledCalc = styled.div`
         color: ${colors.colorNumbersPage1};
         font-weight: bold;
         font-size: 18px;
+      }
+      &:active {
+        border-bottom: none;
+        margin-top: 1.5px;
       }
     }
     .btnDelete,
