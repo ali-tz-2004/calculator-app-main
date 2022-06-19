@@ -1,24 +1,12 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { processes } from "../utils/processes";
+import { isProcess, pages, Range } from "../utils/types";
 import { StyledCalc } from "./StyledComponents";
 
 export const Calc = () => {
-  type pages = "1" | "2" | "3";
-
-  const processesTypes = ["-", "+", "/", "*"] as const;
-  type ProcessesTypes = typeof processesTypes[number];
-  const isProcess = (x: any): x is ProcessesTypes => processesTypes.includes(x);
-
-  interface Range {
-    className: string;
-    page: pages;
-  }
-
-  interface Processes {
-    className: string;
-    value: string;
-  }
-
   const [page, setPage] = useState<pages>("1");
+  const inputRef: any = useRef();
+  const [activeInput, setActiveInput] = useState(true);
 
   const range: Range[] = [
     {
@@ -37,45 +25,36 @@ export const Calc = () => {
       page: "3",
     },
   ];
-  const processes: Processes[] = [
-    { className: "btn-processes btn7", value: "7" },
-    { className: "btn-processes btn8", value: "8" },
-    { className: "btn-processes btn9", value: "9" },
-    { className: "btn-processes btnDelete", value: "DEL" },
-    { className: "btn-processes btn4", value: "4" },
-    { className: "btn-processes btn5", value: "5" },
-    { className: "btn-processes btn6", value: "6" },
-    { className: "btn-processes btnPlus", value: "+" },
-    { className: "btn-processes btn1", value: "1" },
-    { className: "btn-processes btn2", value: "2" },
-    { className: "btn-processes btn3", value: "3" },
-    { className: "btn-processes btnMinus", value: "-" },
-    { className: "btn-processes btnReview", value: "." },
-    { className: "btn-processes btnZero", value: "0" },
-    { className: "btn-processes btnDivision", value: "/" },
-    { className: "btn-processes btnMultiplication", value: "×" },
-    { className: "btn-processes btnReset", value: "RESET" },
-    { className: "btn-processes btnEqual", value: "=" },
-  ];
 
   const [result, setResult] = useState<string>("0");
   const [auditor, setAuditor] = useState(true);
   const [visible, setVisible] = useState(true);
 
-  function getNumbers(value: string | number) {
+  function getNumbers(value: string) {
     for (let index = 0; index <= 9; index++) {
       if (+value === index) {
+        if (
+          isProcess(result.slice(-2, -1)) &&
+          value === "0" &&
+          result.slice(-1) === "0"
+        ) {
+          continue;
+        }
+        console.log(result.slice(-1), " 1");
         setResult(
-          result === "0"
-            ? result.replace(result, index.toString())
-            : result.concat(index.toString())
+          (result.length === 1 && result.slice(-1) === "0") ||
+            (isProcess(result.slice(-2, -1)) && result.slice(-1) === "0")
+            ? result.replace(result.slice(-1), value)
+            : result.concat(value)
         );
+        console.log(result.slice(-1), " 2");
         if (visible) {
           setAuditor(true);
         }
       }
     }
   }
+
   function getRepetitiveChecking(value: string) {
     if (result.slice(-1) !== value) {
       setResult(
@@ -135,7 +114,31 @@ export const Calc = () => {
         break;
     }
   }
+  function separator(numb: number) {
+    var str = numb.toString().split(".");
+    str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return str.join(".");
+  }
 
+  useEffect(() => {
+    const arrayResult = result.match(/[^\d()]+|[\d.]+/g);
+    let resultFinal = "";
+    if (arrayResult) {
+      for (let i = 0; i < arrayResult?.length; i++) {
+        if (!isNaN(+arrayResult[i])) {
+          resultFinal += separator(+arrayResult[i]).toString();
+          console.log(resultFinal);
+        } else {
+          resultFinal += arrayResult[i];
+          console.log(resultFinal);
+        }
+      }
+    }
+    setResult(resultFinal);
+  }, []);
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [result]);
   return (
     <StyledCalc>
       <div className="info-title">
@@ -161,7 +164,7 @@ export const Calc = () => {
         </div>
       </div>
       <div className="result">
-        <input type="text" readOnly value={result} />
+        <input type="text" value={result} ref={inputRef} readOnly />
       </div>
       <div className="processes">
         {processes.map((x, index) => {

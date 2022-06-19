@@ -1,0 +1,23 @@
+ function getNumbers(value: string) {
+    for (let index = 0; index <= 9; index++) {
+      if (+value === index) {
+        if (
+          isProcess(result.slice(-2, -1)) &&
+          value === "0" &&
+          result.slice(-1) === "0"
+        ) {
+          continue;
+        }
+        console.log(result.slice(-1));
+        setResult(
+          (result.length === 1 && result.slice(-1) === "0") ||
+            (isProcess(result.slice(-2, -1)) && result.slice(-1) === "0")
+            ? result.replace(result.slice(-1), value)
+            : result.concat(value)
+        );
+        if (visible) {
+          setAuditor(true);
+        }
+      }
+    }
+  }
