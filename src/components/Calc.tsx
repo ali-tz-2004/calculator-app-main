@@ -6,7 +6,6 @@ import { StyledCalc } from "./StyledComponents";
 export const Calc = () => {
   const [page, setPage] = useState<pages>("1");
   const inputRef: any = useRef();
-  const [activeInput, setActiveInput] = useState(true);
 
   const range: Range[] = [
     {
@@ -40,14 +39,12 @@ export const Calc = () => {
         ) {
           continue;
         }
-        console.log(result.slice(-1), " 1");
         setResult(
           (result.length === 1 && result.slice(-1) === "0") ||
             (isProcess(result.slice(-2, -1)) && result.slice(-1) === "0")
             ? result.replace(result.slice(-1), value)
             : result.concat(value)
         );
-        console.log(result.slice(-1), " 2");
         if (visible) {
           setAuditor(true);
         }
@@ -86,6 +83,10 @@ export const Calc = () => {
         if (result === "0") {
           return;
         }
+        if (result.slice(-1)) {
+          setAuditor(true);
+          setVisible(true);
+        }
         setResult(result.length === 1 ? "0" : result.slice(0, -1));
         break;
       case ".":
@@ -120,24 +121,17 @@ export const Calc = () => {
     return str.join(".");
   }
 
-  useEffect(() => {
-    const arrayResult = result.match(/[^\d()]+|[\d.]+/g);
-    let resultFinal = "";
-    if (arrayResult) {
-      for (let i = 0; i < arrayResult?.length; i++) {
-        if (!isNaN(+arrayResult[i])) {
-          resultFinal += separator(+arrayResult[i]).toString();
-          console.log(resultFinal);
-        } else {
-          resultFinal += arrayResult[i];
-          console.log(resultFinal);
-        }
-      }
-    }
-    setResult(resultFinal);
-  }, []);
+  function findNumber(str: string) {
+    return +str.replace(/\D+/g, "").toString();
+  }
+
   useEffect(() => {
     inputRef.current.focus();
+  }, [result]);
+
+  useEffect(() => {
+    let resultArray = [];
+    console.log(separator(findNumber(result)));
   }, [result]);
   return (
     <StyledCalc>
