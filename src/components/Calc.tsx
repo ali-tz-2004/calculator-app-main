@@ -29,20 +29,28 @@ export const Calc = () => {
   const [auditor, setAuditor] = useState(true);
   const [visible, setVisible] = useState(true);
 
+  function addComma(value: string) {
+    let resultArray = [];
+    let j = 0;
+    for (let i = 0; i < result.length; i++) {
+      for (let j = i; j < result.length; j++) {
+        if (isProcess(result[j])) {
+          resultArray.push(result.slice(i, j - 1));
+          break;
+        }
+      }
+    }
+    console.log(resultArray, "array");
+  }
+
   function getNumbers(value: string) {
     for (let index = 0; index <= 9; index++) {
       if (+value === index) {
-        if (
-          isProcess(result.slice(-2, -1)) &&
-          value === "0" &&
-          result.slice(-1) === "0"
-        ) {
-          continue;
-        }
+        for (let j = 0; j < result.length; j++) {}
         setResult(
           (result.length === 1 && result.slice(-1) === "0") ||
             (isProcess(result.slice(-2, -1)) && result.slice(-1) === "0")
-            ? result.replace(result.slice(-1), value)
+            ? result.replace(/.$/, value)
             : result.concat(value)
         );
         if (visible) {
@@ -72,6 +80,7 @@ export const Calc = () => {
   }
 
   function getResult(value: string) {
+    addComma(value);
     getNumbers(value);
     switch (value) {
       case "RESET":
@@ -127,12 +136,9 @@ export const Calc = () => {
 
   useEffect(() => {
     inputRef.current.focus();
+    // console.log(separator(findNumber(result)));
   }, [result]);
 
-  useEffect(() => {
-    let resultArray = [];
-    console.log(separator(findNumber(result)));
-  }, [result]);
   return (
     <StyledCalc>
       <div className="info-title">
