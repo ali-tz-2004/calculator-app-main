@@ -29,29 +29,15 @@ export const Calc = () => {
   const [auditor, setAuditor] = useState(true);
   const [visible, setVisible] = useState(true);
 
-  function addComma(value: string) {
-    let resultArray = [];
-    let j = 0;
-    for (let i = 0; i < result.length; i++) {
-      for (let j = i; j < result.length; j++) {
-        if (isProcess(result[j])) {
-          resultArray.push(result.slice(i, j - 1));
-          break;
-        }
-      }
-    }
-    console.log(resultArray, "array");
-  }
-
   function getNumbers(value: string) {
     for (let index = 0; index <= 9; index++) {
       if (+value === index) {
-        for (let j = 0; j < result.length; j++) {}
         setResult(
-          (result.length === 1 && result.slice(-1) === "0") ||
-            (isProcess(result.slice(-2, -1)) && result.slice(-1) === "0")
+          (result.length === 1 && result.toString().slice(-1) === "0") ||
+            (isProcess(result.toString().slice(-2, -1)) &&
+              result.toString().slice(-1) === "0")
             ? result.replace(/.$/, value)
-            : result.concat(value)
+            : result.toString().concat(value)
         );
         if (visible) {
           setAuditor(true);
@@ -61,17 +47,17 @@ export const Calc = () => {
   }
 
   function getRepetitiveChecking(value: string) {
-    if (result.slice(-1) !== value) {
+    if (result.toString().slice(-1) !== value) {
       setResult(
-        isProcess(result.slice(-1))
+        isProcess(result.toString().slice(-1))
           ? result.replace(/.$/, value)
-          : result.concat(value)
+          : result.toString().concat(value)
       );
       if (value === "×") {
         setResult(
-          isProcess(result.slice(-1))
+          isProcess(result.toString().slice(-1))
             ? result.replace(/.$/, "*")
-            : result.concat("*")
+            : result.toString().concat("*")
         );
       }
       setAuditor(false);
@@ -80,7 +66,6 @@ export const Calc = () => {
   }
 
   function getResult(value: string) {
-    addComma(value);
     getNumbers(value);
     switch (value) {
       case "RESET":
@@ -92,15 +77,15 @@ export const Calc = () => {
         if (result === "0") {
           return;
         }
-        if (result.slice(-1)) {
+        if (result.toString().slice(-1)) {
           setAuditor(true);
           setVisible(true);
         }
-        setResult(result.length === 1 ? "0" : result.slice(0, -1));
+        setResult(result.length === 1 ? "0" : result.toString().slice(0, -1));
         break;
       case ".":
         if (auditor && visible) {
-          setResult(result.concat(value));
+          setResult(result.toString().concat(value));
           setAuditor(false);
           setVisible(false);
         }
@@ -121,13 +106,16 @@ export const Calc = () => {
         // eslint-disable-next-line no-new-func
         let resultEqual = Function(`return ${result};`);
         setResult(resultEqual());
+        if (result.indexOf(".") !== -1) {
+          setAuditor(false);
+          setVisible(false);
+        }
         break;
     }
   }
-  function separator(numb: number) {
-    var str = numb.toString().split(".");
-    str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return str.join(".");
+
+  function numberWithCommas(x: string) {
+    return x.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   function findNumber(str: string) {
@@ -136,7 +124,8 @@ export const Calc = () => {
 
   useEffect(() => {
     inputRef.current.focus();
-    // console.log(separator(findNumber(result)));
+    // for (let i = 0; i < resultArray.length; i++) {
+    // }
   }, [result]);
 
   return (
