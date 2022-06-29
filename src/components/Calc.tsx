@@ -28,17 +28,23 @@ export const Calc = () => {
   const [result, setResult] = useState<string>("0");
   const [auditor, setAuditor] = useState(true);
   const [visible, setVisible] = useState(true);
+  const [equal, setEqual] = useState(false);
 
   function getNumbers(value: string) {
     for (let index = 0; index <= 9; index++) {
       if (+value === index) {
-        setResult(
-          (result.length === 1 && result.toString().slice(-1) === "0") ||
-            (isProcess(result.toString().slice(-2, -1)) &&
-              result.toString().slice(-1) === "0")
-            ? result.replace(/.$/, value)
-            : result.toString().concat(value)
-        );
+        if (equal) {
+          setResult(value);
+          setEqual(false);
+        } else {
+          setResult(
+            (result.length === 1 && result.toString().slice(-1) === "0") ||
+              (isProcess(result.toString().slice(-2, -1)) &&
+                result.toString().slice(-1) === "0")
+              ? result.replace(/.$/, value)
+              : result.toString().concat(value)
+          );
+        }
         if (visible) {
           setAuditor(true);
         }
@@ -48,12 +54,14 @@ export const Calc = () => {
 
   function getRepetitiveChecking(value: string) {
     if (result.toString().slice(-1) !== value) {
+      setEqual(false);
       setResult(
         isProcess(result.toString().slice(-1))
           ? result.replace(/.$/, value)
           : result.toString().concat(value)
       );
       if (value === "×") {
+        setEqual(false);
         setResult(
           isProcess(result.toString().slice(-1))
             ? result.replace(/.$/, "*")
@@ -110,22 +118,13 @@ export const Calc = () => {
           setAuditor(false);
           setVisible(false);
         }
+        setEqual(true);
         break;
     }
   }
 
-  function numberWithCommas(x: string) {
-    return x.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
-
-  function findNumber(str: string) {
-    return +str.replace(/\D+/g, "").toString();
-  }
-
   useEffect(() => {
     inputRef.current.focus();
-    // for (let i = 0; i < resultArray.length; i++) {
-    // }
   }, [result]);
 
   return (
