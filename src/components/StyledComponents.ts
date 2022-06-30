@@ -10,6 +10,7 @@ export const StyledApp = styled.div`
 `;
 
 export const StyledCalc = styled.div`
+  /* transform: scale(0.9); */
   width: 400px;
   height: 500px;
   .info-title {
@@ -32,38 +33,39 @@ export const StyledCalc = styled.div`
       top: 0;
       right: 0.5rem;
       font-size: 0.7rem;
-      width: 45px;
+      width: 40px;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       font-weight: bold;
+      margin-inline-end: 7px;
     }
     .range-page {
       background-color: ${colors.bgRangePage1};
-      width: 45px;
-      height: 17px;
+      width: 50px;
+      height: 20px;
       border-radius: 10px;
       margin-inline-start: 15px;
       position: relative;
       .range {
-        height: 13px;
-        width: 13px;
+        height: 12px;
+        width: 12px;
         border-radius: 50%;
         background-color: ${colors.colorRangePage1};
         position: absolute;
         top: 50%;
-        transform: translateY(-54%);
+        transform: translateY(-50%);
         cursor: pointer;
       }
       .range-page1 {
-        left: 3px;
+        left: 5px;
         opacity: 0;
       }
       .range-page2 {
-        left: 16px;
+        left: 18px;
         opacity: 0;
       }
       .range-page3 {
-        right: 3px;
+        right: 5px;
         opacity: 0;
       }
       .visible {
@@ -106,18 +108,27 @@ export const StyledCalc = styled.div`
       cursor: pointer;
       background-color: white;
       border-radius: 8px;
-      padding: 10px 0;
+      padding: 6px 0;
       position: relative;
       background-color: white;
       border-bottom: 3px solid #b2a295;
+      font-size: 1.2rem;
       span {
         color: ${colors.colorNumbersPage1};
         font-weight: bold;
-        font-size: 18px;
+        font-size: 1.5rem;
       }
       &:active {
         border-bottom: none;
         margin-top: 1.5px;
+      }
+    }
+    .btnReset,
+    .btnEqual,
+    .btnDelete {
+      padding: 10px 0;
+      span {
+        font-size: 1rem;
       }
     }
     .btnDelete,
