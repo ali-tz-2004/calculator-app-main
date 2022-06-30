@@ -1,11 +1,35 @@
 import { useEffect, useRef, useState } from "react";
-import { processes } from "../utils/processes";
-import { isProcess, pages, Range } from "../utils/types";
+import { isProcess, pages, Processes, Range } from "../utils/types";
 import { StyledCalc } from "./StyledComponents";
 
 export const Calc = () => {
   const [page, setPage] = useState<pages>("1");
   const inputRef: any = useRef();
+  const [result, setResult] = useState<string>("0");
+  const [auditor, setAuditor] = useState(true);
+  const [visible, setVisible] = useState(true);
+  const [equal, setEqual] = useState(false);
+
+  const processes: Processes[] = [
+    { className: pages("btn-processes btn7"), value: "7" },
+    { className: pages("btn-processes btn8"), value: "8" },
+    { className: pages("btn-processes btn9"), value: "9" },
+    { className: pages("btn-processes btnDelete"), value: "DEL" },
+    { className: pages("btn-processes btn4"), value: "4" },
+    { className: pages("btn-processes btn5"), value: "5" },
+    { className: pages("btn-processes btn6"), value: "6" },
+    { className: pages("btn-processes btnPlus"), value: "+" },
+    { className: pages("btn-processes btn1"), value: "1" },
+    { className: pages("btn-processes btn2"), value: "2" },
+    { className: pages("btn-processes btn3"), value: "3" },
+    { className: pages("btn-processes btnMinus"), value: "-" },
+    { className: pages("btn-processes btnReview"), value: "." },
+    { className: pages("btn-processes btnZero"), value: "0" },
+    { className: pages("btn-processes btnDivision"), value: "/" },
+    { className: pages("btn-processes btnMultiplication"), value: "×" },
+    { className: pages("btn-processes btnReset"), value: "RESET" },
+    { className: pages("btn-processes btnEqual"), value: "=" },
+  ];
 
   const range: Range[] = [
     {
@@ -25,10 +49,13 @@ export const Calc = () => {
     },
   ];
 
-  const [result, setResult] = useState<string>("0");
-  const [auditor, setAuditor] = useState(true);
-  const [visible, setVisible] = useState(true);
-  const [equal, setEqual] = useState(false);
+  function pages(name: string) {
+    return page === "2"
+      ? `page-${page} ${name}`
+      : page === "3"
+      ? `page-${page} ${name}`
+      : `${name}`;
+  }
 
   function getNumbers(value: string) {
     for (let index = 0; index <= 9; index++) {
@@ -130,7 +157,7 @@ export const Calc = () => {
   return (
     <StyledCalc>
       <div className="info-title">
-        <h2 className="title">calc</h2>
+        <h2 className={pages("title")}>calc</h2>
         <div className="set-pages">
           <span className="theme"> THEME</span>
           <span className="pages">
