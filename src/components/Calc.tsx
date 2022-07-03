@@ -2,13 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { isProcess, pages, Processes, Range } from "../utils/types";
 import { StyledCalc } from "./StyledComponents";
 
-export const Calc = () => {
-  const [page, setPage] = useState<pages>("1");
-  const inputRef: any = useRef();
+interface ICalc {
+  page: pages;
+  pages: (name: string) => string;
+  hanldePage: (name: pages) => void;
+}
+
+export const Calc = ({ page, pages, hanldePage }: ICalc) => {
   const [result, setResult] = useState<string>("0");
   const [auditor, setAuditor] = useState(true);
   const [visible, setVisible] = useState(true);
   const [equal, setEqual] = useState(false);
+  const inputRef: any = useRef();
 
   const processes: Processes[] = [
     { className: pages("btn-processes btn7"), value: "7" },
@@ -59,14 +64,6 @@ export const Calc = () => {
     var str = numb.toString().split(".");
     str[0] = str[0].replace(/,/g, "");
     return str.join(".");
-  }
-
-  function pages(name: string) {
-    return page === "2"
-      ? `page-${page} ${name}`
-      : page === "3"
-      ? `page-${page} ${name}`
-      : `${name}`;
   }
 
   function changeNumbers() {
@@ -178,7 +175,7 @@ export const Calc = () => {
 
   return (
     <StyledCalc>
-      <div className={pages("info-title")}>
+      <div className="info-title">
         <h2 className="title">calc</h2>
         <div className="set-pages">
           <span className="theme"> THEME</span>
@@ -192,7 +189,7 @@ export const Calc = () => {
               return (
                 <div
                   className={x.className}
-                  onClick={() => setPage(x.page)}
+                  onClick={() => hanldePage(x.page)}
                   key={index}
                 ></div>
               );

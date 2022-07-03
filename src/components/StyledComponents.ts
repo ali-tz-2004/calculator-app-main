@@ -2,11 +2,91 @@ import styled from "styled-components";
 import { colors } from "../utils/colors";
 
 export const StyledApp = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
   background-color: ${colors.bgPage1};
+  .main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+  }
+  //page 2
+  .page-2 {
+    background-color: ${colors.bgPage2};
+    .info-title {
+      color: ${colors.colorTxtPage2};
+    }
+    .range-page {
+      background-color: ${colors.bgRangePage2} !important;
+      .range {
+        background-color: ${colors.colorRangePage2} !important;
+      }
+    }
+    .result {
+      input {
+        background: ${colors.while};
+        color: ${colors.colorTxtPage2};
+      }
+    }
+    .processes {
+      background-color: ${colors.bgProcessesPage2};
+      .btnDelete,
+      .btnReset {
+        background-color: ${colors.bgBtnsPage2} !important;
+        border-bottom: 3px solid #1b6066 !important;
+      }
+      .btnEqual {
+        background-color: ${colors.colorRangePage2} !important;
+        border-bottom: 3px solid #883a01 !important;
+      }
+    }
+  }
+  //page 3
+  .page-3 {
+    background-color: ${colors.bgPage3};
+    span,
+    h2,
+    input {
+      color: ${colors.colorTxtPage3} !important;
+    }
+    .range-page {
+      background-color: ${colors.bgRangePage3} !important;
+      .range {
+        background-color: ${colors.colorRangePage3} !important;
+      }
+    }
+    .result {
+      input {
+        background-color: ${colors.bgInputPage3};
+      }
+    }
+    .processes {
+      background-color: ${colors.bgInputPage3};
+      .btn-processes {
+        background-color: ${colors.bgBtnsPage3} !important;
+        border-bottom: 3px solid #871e9f !important;
+        &:active {
+          border-bottom: none !important;
+        }
+      }
+      .btnDelete,
+      .btnReset {
+        background-color: ${colors.bgBtns} !important;
+        border-bottom: 3px solid #871e9f !important;
+        /* border-bottom: 3px solid #b2a295; */
+        span {
+          color: ${colors.while} !important;
+        }
+      }
+      .btnEqual {
+        background-color: ${colors.colorRangePage3} !important;
+        border-bottom: 3px solid #6ef9f0 !important;
+        span {
+          color: ${colors.while} !important;
+        }
+      }
+    }
+  }
 `;
 
 export const StyledCalc = styled.div`
@@ -150,15 +230,5 @@ export const StyledCalc = styled.div`
         color: white;
       }
     }
-  }
-
-  .page-2 {
-    background-color: yellow;
-    .title {
-      color: black;
-    }
-  }
-  .page-3 {
-    color: red;
   }
 `;
