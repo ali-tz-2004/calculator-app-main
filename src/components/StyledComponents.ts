@@ -10,7 +10,7 @@ export const StyledApp = styled.div`
 `;
 
 export const StyledCalc = styled.div`
-  /* transform: scale(0.9); */
+  transform: scale(0.93);
   width: 400px;
   height: 500px;
   .info-title {
@@ -108,7 +108,7 @@ export const StyledCalc = styled.div`
       cursor: pointer;
       background-color: white;
       border-radius: 8px;
-      padding: 6px 0;
+      padding: 5px 0;
       position: relative;
       background-color: white;
       border-bottom: 3px solid #b2a295;
@@ -124,9 +124,13 @@ export const StyledCalc = styled.div`
       }
     }
     .btnReset,
-    .btnEqual,
-    .btnDelete {
+    .btnEqual {
       padding: 10px 0;
+      span {
+        font-size: 1rem;
+      }
+    }
+    .btnDelete {
       span {
         font-size: 1rem;
       }
@@ -146,5 +150,15 @@ export const StyledCalc = styled.div`
         color: white;
       }
     }
+  }
+
+  .page-2 {
+    background-color: yellow;
+    .title {
+      color: black;
+    }
+  }
+  .page-3 {
+    color: red;
   }
 `;

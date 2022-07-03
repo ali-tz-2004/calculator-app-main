@@ -49,12 +49,30 @@ export const Calc = () => {
     },
   ];
 
+  function addComma(numb: string) {
+    var str = numb.toString().split(".");
+    str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return str.join(".");
+  }
+
+  function removeComma(numb: string) {
+    var str = numb.toString().split(".");
+    str[0] = str[0].replace(/,/g, "");
+    return str.join(".");
+  }
+
   function pages(name: string) {
     return page === "2"
       ? `page-${page} ${name}`
       : page === "3"
       ? `page-${page} ${name}`
       : `${name}`;
+  }
+
+  function changeNumbers() {
+    if (!auditor) {
+      setResult(addComma(result));
+    }
   }
 
   function getNumbers(value: string) {
@@ -83,14 +101,14 @@ export const Calc = () => {
     if (result.toString().slice(-1) !== value) {
       setEqual(false);
       setResult(
-        isProcess(result.toString().slice(-1))
+        isProcess(result.toString().slice(-1)) || result.slice(-1) === "."
           ? result.replace(/.$/, value)
           : result.toString().concat(value)
       );
       if (value === "×") {
         setEqual(false);
         setResult(
-          isProcess(result.toString().slice(-1))
+          isProcess(result.toString().slice(-1)) || result.slice(-1) === "."
             ? result.replace(/.$/, "*")
             : result.toString().concat("*")
         );
@@ -139,8 +157,8 @@ export const Calc = () => {
         break;
       case "=":
         // eslint-disable-next-line no-new-func
-        let resultEqual = Function(`return ${result};`);
-        setResult(resultEqual());
+        let resultEqual = Function(`return ${removeComma(result)};`);
+        setResult(addComma(resultEqual()));
         if (result.indexOf(".") !== -1) {
           setAuditor(false);
           setVisible(false);
@@ -151,13 +169,17 @@ export const Calc = () => {
   }
 
   useEffect(() => {
+    document.body.addEventListener("click", () => {
+      inputRef.current.focus();
+    });
     inputRef.current.focus();
+    changeNumbers();
   }, [result]);
 
   return (
     <StyledCalc>
-      <div className="info-title">
-        <h2 className={pages("title")}>calc</h2>
+      <div className={pages("info-title")}>
+        <h2 className="title">calc</h2>
         <div className="set-pages">
           <span className="theme"> THEME</span>
           <span className="pages">
