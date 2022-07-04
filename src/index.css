@@ -11,3 +11,39 @@ input{
   outline: none;
   border: none;
 }
+@media screen and (max-width: 500px) {
+  .main {
+    min-height: 100vh !important;
+    align-items: flex-start !important;
+  }
+  .calc{
+    margin: 1.5rem;
+  }
+  .info-title .title {
+    font-size: 2rem;
+  }
+  .set-pages{
+    transform: scale(1.2);
+  }
+  .pages{
+    top:-20px !important;
+    right: 0px !important;
+  }
+  .inputReslut{
+    height: 80px !important;
+    font-size: 35px !important;
+  }
+  .processes{
+    height: 100%;
+  }
+  .btn-processes{
+    height: 70px;
+    width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .btnEqual, .btnReset{
+    width: 155px;
+  }
+}

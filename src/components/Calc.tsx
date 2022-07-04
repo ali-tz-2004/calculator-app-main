@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { isProcess, pages, Processes, Range } from "../utils/types";
+import { isNumber, isProcess, pages, Processes, Range } from "../utils/types";
 import { StyledCalc } from "./StyledComponents";
 
 interface ICalc {
@@ -73,23 +73,21 @@ export const Calc = ({ page, pages, hanldePage }: ICalc) => {
   }
 
   function getNumbers(value: string) {
-    for (let index = 0; index <= 9; index++) {
-      if (+value === index) {
-        if (equal) {
-          setResult(value);
-          setEqual(false);
-        } else {
-          setResult(
-            (result.length === 1 && result.toString().slice(-1) === "0") ||
-              (isProcess(result.toString().slice(-2, -1)) &&
-                result.toString().slice(-1) === "0")
-              ? result.replace(/.$/, value)
-              : result.toString().concat(value)
-          );
-        }
-        if (visible) {
-          setAuditor(true);
-        }
+    if (isNumber(value)) {
+      if (equal) {
+        setResult(value);
+        setEqual(false);
+      } else {
+        setResult(
+          (result.length === 1 && result.toString().slice(-1) === "0") ||
+            (isProcess(result.toString().slice(-2, -1)) &&
+              result.toString().slice(-1) === "0")
+            ? result.replace(/.$/, value)
+            : result.toString().concat(value)
+        );
+      }
+      if (visible) {
+        setAuditor(true);
       }
     }
   }
@@ -171,10 +169,10 @@ export const Calc = ({ page, pages, hanldePage }: ICalc) => {
     });
     inputRef.current.focus();
     changeNumbers();
-  }, [result]);
+  });
 
   return (
-    <StyledCalc>
+    <StyledCalc className="calc">
       <div className="info-title">
         <h2 className="title">calc</h2>
         <div className="set-pages">
@@ -198,7 +196,13 @@ export const Calc = ({ page, pages, hanldePage }: ICalc) => {
         </div>
       </div>
       <div className="result">
-        <input type="text" value={result} ref={inputRef} readOnly />
+        <input
+          className="inputReslut"
+          type="text"
+          value={result}
+          ref={inputRef}
+          readOnly
+        />
       </div>
       <div className="processes">
         {processes.map((x, index) => {

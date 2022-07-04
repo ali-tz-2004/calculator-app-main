@@ -90,7 +90,7 @@ export const StyledApp = styled.div`
 `;
 
 export const StyledCalc = styled.div`
-  transform: scale(0.93);
+  /* transform: scale(0.93); */
   width: 400px;
   height: 500px;
   .info-title {
